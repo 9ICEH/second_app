@@ -7,53 +7,38 @@ namespace ConsoleApp7
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            int numberOfTypeOfTile, numberOfTypesOfMaterials;
+
+            string[] months = { "январь", "февраль", "март" };
+            string[] tiles = { "Агат", "Оникс", "Малахит" };
+            string[] distributors = { "Мир керамики", "Дом плитки" };
+            string[] countries = { "Италия", "Испания" };
+            decimal[,,,] array = new decimal[countries.Length, distributors.Length, tiles.Length, months.Length];
+
+      for (int w = 0; w < array.GetLength(0); w++)
+           for (int z = 0; z < array.GetLength(1); z++)
+                for (int y = 0; y < array.GetLength(2); y++)
+                    for (int x = 0; x < array.GetLength(3); x++)
+                    {
+                        Console.Write($"{distributors[z]} продал плитки {tiles[y]} за {months[x]} в {countries[w]}: ");
+                        array[w, z, y, x] = Convert.ToDecimal(Console.Read());
+                    }
+
+            while (true)
             {
-                Console.Write("Введите количество разновидностей плитки        :  ");
-                numberOfTypeOfTile = Convert.ToInt32(Console.ReadLine());
-                Console.Write("Введите количество сырья для изготовления плитки:  ");
-                numberOfTypesOfMaterials = Convert.ToInt32(Console.ReadLine());
+                Console.Write("Введите название дистрибьютера: ");
+                string distributorName = Console.ReadLine();
+                Console.Write("Введите название вида плитки: ");
+                string tileName = Console.ReadLine();
+                int distributorIndex = Array.IndexOf(distributors, distributorName);
+                int tailIndex = Array.IndexOf(tiles, tileName);
+                decimal numberOfTiles = 0;
+
+           for (int w = 0; w < array.GetLength(0); w++)
+                for (int x = 0; x < array.GetLength(3); x++)
+                    numberOfTiles += array[w, distributorIndex, tailIndex, x];
+
+                Console.WriteLine($"{distributorName} продал {numberOfTiles} шт. плитки {tileName} за квартал.");
             }
-
-            decimal[,] A = new decimal[numberOfTypeOfTile, numberOfTypesOfMaterials];
-            decimal[,] B = new decimal[numberOfTypesOfMaterials, 1];
-            decimal[] C = new decimal[numberOfTypeOfTile];
-            decimal[,] Z = new decimal[numberOfTypeOfTile, 1];
-
-            for (int i = 0; i < A.GetLength(0); i++)
-                for (int j =0; j < A.GetLength(1); j++)
-                {
-                    Console.Write($"Введите количество сырья № {j + 1} для плитки № {i + 1}(кг.): ");
-                    A[i, j] = Convert.ToDecimal(Console.ReadLine());
-                }
-
-            for (int i = 0; i < B.GetLength(0); i++)
-            {
-                Console.Write($"Введите цену сырья № {i + 1}(руб.): ");
-                B[i, 0] = Convert.ToDecimal(Console.ReadLine());
-            }
-
-            for (int i = 0; i < C.GetLength(0); i++)
-            { 
-                Console.Write($"Введите планируемый объём выпуска плитки № {i + 1}(в штуках.): ");
-                C[i] = Convert.ToDecimal(Console.ReadLine());
-            }
-
-            // Z подсчет общей стоимости материалов(A, D, C, Z)
-            { 
-            for (int i = 0; i < A.GetLength(1); i++)
-                for (int j = 0; j < A.GetLength(1); j++)
-                    Z[i, 0] += A[i, j] * B[j, 0];
-            
-            decimal P = 0;
-
-            for (int i = 0; i < Z.GetLength(0); i++)
-                P += C[i] * Z[i, 0];
-
-            Console.WriteLine($"Общая стоимость вырья = {P}");
-
-            }
-
             // Delay
             Console.ReadKey();
         }

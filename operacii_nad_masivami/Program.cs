@@ -15,23 +15,31 @@ namespace operacii_nad_masivami
                 numberOfTypesOfMaterials = Convert.ToInt32(Console.ReadLine());
             }
 
-            //  в 1-м столбце кг песка, во 2-м кг глина, 1-3 строки типы плитки
-            decimal[,] A = new decimal[3, 2]
+            decimal[,] A = new decimal[numberOfTypeOfTile, numberOfTypesOfMaterials];
+            decimal[,] B = new decimal[numberOfTypesOfMaterials, 1];
+            decimal[] C = new decimal[numberOfTypeOfTile];
+            decimal[,] Z = new decimal[numberOfTypeOfTile, 1];
+
+            for (int i = 0; i < A.GetLength(0); i++)
+                for (int j = 0; j < A.GetLength(1); j++)
+                {
+                    Console.Write($"Введите количество сырья № {j + 1} для плитки № {i + 1} (кг.): ");
+                    A[i, j] = Convert.ToDecimal(Console.ReadLine());
+                }
+
+            for (int i = 0; i < B.GetLength(0); i++)
             {
-               { 5, 4 },  // Т1
-               { 3, 7 },  // Т2
-               { 2, 6 }   // Т3
-            };
+                Console.Write($"Введите цену сырья № {i + 1} (руб.): ");
+                B[i, 0] = Convert.ToDecimal(Console.ReadLine());
+            }
 
-            decimal[,] B = new decimal[2, 1]
+            for (int i =0; i < C.Length; i++)
             {
-               { 70 }, // цена за 1 кг песка
-               { 50 }  // цена за 1 кг глины
-            };
+                Console.Write($"Введите планируемый объём выпуска плитки № {i + 1} (в штуках.): ");
+                C[i] = Convert.ToDecimal(Console.ReadLine());
+            }
 
-            decimal[] C = { 80, 140, 60 }; // к-во штук
 
-            decimal[,] Z = new decimal[3, 1]; // выражение Z = А*В
 
             // Z подсчет общей стоимости материалов(A, D, C, Z)
             {
